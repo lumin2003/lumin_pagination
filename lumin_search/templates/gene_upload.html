@@ -1,0 +1,48 @@
+<body>
+<center>
+<h1>Breast_Cancer_list</h1>
+<a href="/add_user/">Add_patinets</a><br />
+<table border="1">
+    </center>
+
+    <table class="table">
+        <thead>
+           <tr>
+               <th>ID</th>
+               <th>classify</th>
+               <th>age</th>
+               <th>phenotype</th>
+               <th>numbers</th>
+               <th>size</th>
+               <th>location</th>
+               <th>migration</th>
+           </tr>
+        </thead>
+        <tbody>
+           {% for d in gene %}
+           <tr>
+               <td>{{d.id}}</td>
+              <td>{{d.classify}}</td>
+              <td>{{d.age}}</td>
+              <td>{{d.phenotype}}</td>
+              <td>{{d.numbers}}</td>
+               <td>{{d.size}}</td>
+              <td>{{d.location}}</td>
+              <td>{{d.migration}}</td>
+              <td align="center">
+                   <a href="/edit_user/?id={{ d.id }}" class="btn btn-primary"> edit </a>
+                   <a href="/delete_gene/?id={{ d.id }}" class="btn btn-danger"> removal </a>
+              </td>
+           </tr>
+           </tr>
+           {% endfor %}
+           {% block content %}
+             <form method="POST" enctype="multipart/form-data" action = "/gene_upload/" >
+               {% csrf_token %}
+               <input type="file" name="myfile" >
+               <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload</button>
+             </form>
+           {% endblock %}
+        </tbody>
+ </body>
+</html>
