@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hello',
     'lumin_search',
+    'django_tables2',
+    'django_filters',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

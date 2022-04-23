@@ -18,13 +18,15 @@ from django.urls import path
 from hello import views
 from django.urls import path
 from django.contrib import admin
+from hello.views import PatientInfoListView
 
 
 urlpatterns = [
-    path('', views.gene),
-    path('admin/', admin.site.urls),
+    path('', views.gene, name='gene'),
     path('gene/', views.gene, name='gene'),
+    path('admin/', admin.site.urls),
     path('insert/', views.insert, name='register'),
     path('gene_upload/', views.gene_upload, name='gene_upload'),
     path('delete_gene/', views.delete_gene,name='delete_gene'),
+    path('PatientInfo_upload/', views.PatientInfo_upload,name='PatientInfo_upload'),
 ]

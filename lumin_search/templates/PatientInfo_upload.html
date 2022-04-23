@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load django_tables2 %}
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <!-- Bootstrap 相关文件 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+<center>
+<h1>Breast_Cancer_list</h1><body>
+    <table border="1">
+    </center>
+
+    <table class="table">
+        <thead>
+           <tr>
+               <th>ID</th>
+               <th>classify</th>
+               <th>age</th>
+               <th>phenotype</th>
+               <th>numbers</th>
+               <th>size</th>
+               <th>location</th>
+               <th>migration</th>
+               <th>operation</th>
+           </tr>
+        </thead>
+        <tbody>
+        {% for PatientInfos in page_obj.object_list %}
+          {# note that the list of posts are in the page_obj.object_list not page_obj #}
+           <tr>
+               <td>{{PatientInfos.id}}</td>
+              <td>{{PatientInfos.classify}}</td>
+              <td>{{PatientInfos.age}}</td>
+              <td>{{PatientInfos.phenotype}}</td>
+              <td>{{PatientInfos.numbers}}</td>
+               <td>{{PatientInfos.size}}</td>
+              <td>{{PatientInfos.location}}</td>
+              <td>{{PatientInfos.migration}}</td>
+              <td align="center">
+                   <a href="/edit_user/?id={{ d.id }}" class="btn btn-primary"> edit </a>
+                   <a href="/delete_gene/?id={{ d.id }}" class="btn btn-danger"> removal </a>
+              </td>
+           </tr>
+         {% endfor %}
+    </div>
+    <center>
+        {%if page_obj.has_previous %} {# whether the previous page exists #}
+            <a href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+        {% endif %}
+        <span>{{page_obj.number}}</span> {# the current page number #}
+
+        {%if page_obj.has_next %} {# whether the next page exists #}
+            <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+        {% endif %}
+    </center>
+</body>
+</html>

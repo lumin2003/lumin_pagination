@@ -4,7 +4,10 @@ from hello import models
 from .models import PatientInfo
 import csv
 import io
+from django_tables2 import SingleTableView, RequestConfig
+from .tables import PatientInfoTable
 from django.core.paginator import Paginator
+
 
 
 def gene_upload(request):
@@ -28,16 +31,18 @@ def gene_upload(request):
         )
         context = dict()
     print("context", context)
-    return redirect('/gene/', context)
+    return redirect('/PatientInfo_upload/', context)
 # Create your views here.
 
-def gene(request):
 
+
+
+def gene(request):
     data = {}
     listdata = PatientInfo.objects.all()
-    #paginator = Paginator(listdata, 50)
     data['gene'] = listdata
     return render(request, 'gene.html',data)
+
 
 def insert(request):
     if request.method == 'GET':
@@ -60,3 +65,28 @@ def delete_gene(request):
     models.PatientInfo.objects.filter(id=delete_id).delete()
     return redirect('/gene/')
     #return render(request, 'index.html', {'UserInfo': UserInfo})
+
+
+
+class PatientInfoListView(SingleTableView):
+    model = PatientInfo
+    template_name = 'gene_pagination.html'
+    table_class = PatientInfoTable
+
+def PatientInfo_upload(request):
+    PatientInfos = PatientInfo.objects.all()  # fetching all post objects from database
+    p = Paginator(PatientInfos, 45)  # creating a paginator object
+    # getting the desired page number from url
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+    context = {'page_obj': page_obj}
+    # sending the page object to index.html
+    return render(request, 'PatientInfo_upload.html', context)
+
